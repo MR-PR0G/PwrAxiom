@@ -10,6 +10,29 @@
 Whether you need to squeeze every drop of battery life out of your laptop or unleash maximum overclocked performance for gaming and heavy workloads, Power Axiom configures your Linux kernel parameters safely and instantly.
 ---
 
+
+<p align="center">
+  <table border="0" style="border-collapse: collapse; border-style: none;" align="center">
+    <tr>
+      <td align="center" width="50%" style="border: none; padding: 5px;">
+        <img src="/Demos/1.png" alt="Power Axiom Dashboard" style="width: 100%; max-width: 100%; border-radius: 8px;">
+      </td>
+      <td align="center" width="50%" style="border: none; padding: 5px;">
+        <img src="/Demos/2.png" alt="Ultra Performance Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="50%" style="border: none; padding: 5px;">
+        <img src="/Demos/3.png" alt="Dynamic Theming" style="width: 100%; max-width: 100%; border-radius: 8px;">
+      </td>
+      <td align="center" width="50%" style="border: none; padding: 5px;">
+        <img src="/Demos/4.png" alt="Ultra Save Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
+      </td>
+    </tr>
+  </table>
+</p>
+
+---
 ## ✨ Key Features
 
 * 🎛️ **5 Hardware Profiles:** Instantly switch between Ultra Performance, Performance, Balanced, Save, and Ultra Save.
