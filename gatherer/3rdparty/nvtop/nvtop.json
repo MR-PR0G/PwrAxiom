@@ -1,0 +1,13 @@
+{
+  "package-name": "nvtop",
+  "directory": "nvtop-20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea",
+  "source-url": "https://github.com/Syllo/nvtop/archive/20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea.tar.gz",
+  "source-hash": "f2e41eb4331f116ecee3885b748078a1b6055572ccf6a2f4b0539b5c8bdaf48c",
+  "patches": [
+    "patches/nvtop-amdgpu-h.patch",
+    "patches/nvtop-amdgpu_drm-h.patch",
+    "patches/nvtop-constructors.patch",
+    "patches/nvtop-kcmp-h.patch",
+    "patches/nvtop-no-drmGetDevices2.patch"
+  ]
+}

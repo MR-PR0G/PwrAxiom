@@ -1,0 +1,316 @@
+:root {
+    --primary-color: #00e5ff;
+    --secondary-color: rgba(0, 229, 255, 0.25);
+}
+
+window {
+    background-color: #0a0a0a;
+}
+
+.glass-monitor {
+    background: linear-gradient(135deg, rgba(25,25,25,0.85) 0%, rgba(15,15,15,0.95) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 36px;
+    padding: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+}
+
+.cpu-box {
+    background: rgba(0,0,0,0.15);
+    border: 1px solid var(--secondary-color);
+    border-radius: 24px;
+    padding: 18px;
+}
+
+.cpu-brand {
+    font-size: 11px;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cores-wrapper {
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+}
+
+.dash-title {
+    font-size: 11px;
+    color: #777;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.dash-value-small {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+.mini-core {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 6px 10px;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.core-offline {
+    opacity: 0.20;
+    background-color: rgba(10, 10, 10, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.mini-core-lbl {
+    font-size: 11px;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.mini-core-val {
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.mem-bar trough {
+    background-color: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    min-height: 10px;
+}
+
+.mem-bar progress {
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    min-height: 10px;
+}
+
+.gpu-container {
+    background: rgba(0,0,0,0.15);
+    border: 1px solid var(--secondary-color);
+    border-radius: 24px;
+    padding: 12px;
+    min-width: 270px;
+}
+
+.gpu-card {
+    background: rgba(25,25,25,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 8px;
+    min-width: 110px;
+}
+
+.gpu-text-box {
+    margin-bottom: 8px;
+}
+
+.gpu-stat-lbl {
+    font-size: 10px;
+    color: #666;
+    font-weight: bold;
+}
+
+.gpu-stat-val {
+    font-size: 11px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.gpu-bar-overlay {
+    min-height: 150px;
+    margin: 8px;
+}
+
+.gpu-bar {
+    min-width: 40px;
+}
+
+.gpu-bar trough {
+    min-width: 40px;
+    background-color: rgba(255,255,255,0.06);
+    border-radius: 12px;
+}
+
+.gpu-bar progress {
+    min-width: 40px;
+    background-color: var(--primary-color);
+    border-radius: 12px;
+}
+
+.gpu-bar-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+
+.gpu-name {
+    font-size: 11px;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+}
+
+.planet {
+    min-width: 210px;
+    min-height: 130px;
+    background-color: rgba(25, 25, 25, 0.85);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 32px;
+}
+
+.planet-left {
+    border-radius: 32px 12px 32px 32px;
+}
+
+.planet-right {
+    border-radius: 12px 32px 32px 32px;
+}
+
+/* فیکس قطعی دو رنگ شدن دکمه فعال: سایه‌ها کاملاً پیرو پالت رنگ انتخابی کاربر هستند */
+.active-planet {
+    border-width: 3px;
+    border-color: var(--primary-color);
+    background-color: rgba(25, 25, 25, 0.85);
+    box-shadow: 0 6px 16px var(--secondary-color);
+}
+
+.active-planet:hover {
+    box-shadow: 0 6px 16px var(--secondary-color);
+}
+
+.theme-section-container {
+    border: 1px solid var(--secondary-color);
+    border-radius: 16px;
+    padding: 15px;
+    background: rgba(0,0,0,0.15);
+}
+
+.theme-circle {
+    border-radius: 50%;
+    min-width: 22px;
+    min-height: 22px;
+    border: 2px solid rgba(255,255,255,0.2);
+    padding: 0;
+    margin: 4px;
+}
+
+.theme-circle:hover {
+    border: 2px solid #fff;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.settings-panel-box {
+    background: rgba(15,15,15,0.96);
+    border: 1px solid var(--secondary-color);
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+}
+
+.toggle-arrow {
+    border-radius: 14px;
+    min-width: 75px;
+    min-height: 38px;
+    margin-top: 15px;
+    background: rgba(25, 25, 25, 0.8);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    border: 1px solid var(--secondary-color);
+}
+
+.toggle-arrow image {
+    color: #ffffff;
+}
+
+.boost-btn-style {
+    background-color: var(--primary-color);
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--secondary-color);
+    transition: all 0.2s ease;
+}
+
+.boost-btn-style:hover {
+    background-color: #fff;
+    box-shadow: 0 6px 18px var(--primary-color);
+}
+
+.git-btn {
+    background: rgba(255,255,255,0.04);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    font-weight: bold;
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+    font-size: 13px;
+}
+
+.git-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--secondary-color);
+}
+
+.auth-win {
+    background-color: #0c0e12;
+    border: 1px solid var(--secondary-color);
+    border-radius: 24px;
+}
+
+.auth-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.auth-desc {
+    font-size: 13px;
+    color: #a0a5b5;
+}
+
+.auth-sub {
+    font-size: 11px;
+    color: #6c7a89;
+    font-weight: 500;
+}
+
+.auth-entry {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--secondary-color);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.app-info-container {
+    border: 1px solid var(--secondary-color);
+    border-radius: 16px;
+    padding: 15px;
+    background: rgba(0,0,0,0.2);
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.settings-row-layout {
+    margin-top: 10px;
+}
