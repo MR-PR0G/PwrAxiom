@@ -144,4 +144,4 @@ sudo ./installer.sh
 This project stands on the shoulders of giants. Special thanks to the open-source community and the following upstream project:
 
 
-* **[Mission Center](https://github.com/mishaaq/mission-center):** The core hardware metrics parsing logic in our `gatherer` subsystem is adapted from Mission Center's process and usage gathering tools under the GPL license. 
+* **[Mission Center]([https://github.com/mishaaq/mission-center](https://github.com/Slimbook-Team/mission-center):** The core hardware metrics parsing logic in our `gatherer` subsystem is adapted from Mission Center's process and usage gathering tools under the GPL license. 
