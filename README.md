@@ -58,7 +58,7 @@ Whether you need to squeeze every drop of battery life out of your laptop or unl
 ---
 
 ## 🛠️ Installation 
-1. Go to the [Releases](https://github.com/MR-PR0G/pwraxiom/releases) page and download the latest `power_axiom-v0.2.0-x86_64.tar.gz`.
+1. Go to the [Releases](https://github.com/MR-PR0G/pwraxiom/releases) page and download the latest.
 2. Extract the archive and run the installer:
 ```bash
 tar -xvf power_axiom-v0.2.0-x86_64.tar.gz
