@@ -1,6 +1,5 @@
 use crate::backend::executor::execute_batch;
 use crate::backend::hardware::HardwareManager;
-use std::fs;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum Profile {
@@ -133,8 +132,15 @@ impl ProfileRegistry {
         let mut commands = Vec::new();
         let cpu_count = Self::get_cpu_count();
 
+        let keep_alive = ((cpu_count * 3) / 4).max(1);
+        println!("[INFO] Core lifecycle policy: Scaling active boundaries. Parking cores: Active {}/{}", keep_alive, cpu_count);
+
         for i in 0..cpu_count {
-            commands.push(format!("echo 1 > /sys/devices/system/cpu/cpu{}/online 2>/dev/null || true", i));
+            if i < keep_alive {
+                commands.push(format!("echo 1 > /sys/devices/system/cpu/cpu{}/online 2>/dev/null || true", i));
+            } else {
+                commands.push(format!("echo 0 > /sys/devices/system/cpu/cpu{}/online 2>/dev/null || true", i));
+            }
         }
 
         commands.push("echo powersave | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null 2>&1".to_string());
@@ -237,7 +243,7 @@ impl ProfileRegistry {
         result
     }
 
-    pub fn apply_custom(hw: &HardwareManager, password: &str) -> Result<(), String> {
+    pub fn apply_custom(_hw: &HardwareManager, password: &str) -> Result<(), String> {
         println!("[INFO] Initializing Custom Setup Profile rule map execution...");
         let commands = Vec::new();
         execute_batch(password, &commands)

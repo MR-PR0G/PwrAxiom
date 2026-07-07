@@ -13,7 +13,12 @@ thread_local! {
 }
 
 fn get_profile_config_path() -> PathBuf {
-    let mut path = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+    let mut path = PathBuf::from("/run/user");
+    let uid = std::process::id();
+    path.push(uid.to_string());
+    if !path.exists() {
+        path = std::env::temp_dir();
+    }
     path.push(".pwraxiom_profile");
     path
 }
@@ -81,8 +86,11 @@ fn mark_button_active(btn: &Button) {
     ACTIVE_BUTTON.with(|cell| {
         if let Some(old_btn) = cell.borrow_mut().take() {
             old_btn.remove_css_class("active-planet");
+            // فوراً دکمه قبلی را وادار به بازنویسی استایل میکنیم تا زباله پیکسلی رخ ندهد
+            old_btn.queue_allocate();
         }
         btn.add_css_class("active-planet");
+        btn.queue_allocate();
         *cell.borrow_mut() = Some(btn.clone());
     });
 }
@@ -99,7 +107,10 @@ fn setup_button_spotlight(btn: &Button) {
 
 fn dispatch_profile_application(target_btn: &Button, target_enum: Profile, status_lbl: &Label, progress_bar: &ProgressBar, sub_status_lbl: &Label, dialog: &Window, root_win_weak: Option<glib::WeakRef<Window>>) {
     let step = Rc::new(RefCell::new(0));
-    glib::timeout_add_local(Duration::from_millis(600), clone!(@weak dialog, @weak status_lbl, @weak progress_bar, @weak sub_status_lbl, @strong target_btn => @default-return glib::ControlFlow::Break, move || {
+    let (tx, rx) = std::sync::mpsc::channel();
+    let rx_ref = Rc::new(RefCell::new(Some(rx)));
+
+    glib::timeout_add_local(Duration::from_millis(600), clone!(@weak dialog, @weak status_lbl, @weak progress_bar, @weak sub_status_lbl, @strong target_btn, @strong root_win_weak => @default-return glib::ControlFlow::Break, move || {
         let mut curr = step.borrow_mut();
         *curr += 1;
         match *curr {
@@ -121,33 +132,47 @@ fn dispatch_profile_application(target_btn: &Button, target_enum: Profile, statu
                     _ => sub_status_lbl.set_label("Injecting native scheduler configurations..."),
                 }
                 progress_bar.set_fraction(0.7);
+
+                let tx_clone = tx.clone();
+                std::thread::spawn(move || {
+                    if let Ok(mut manager) = BackendManager::global().lock() {
+                        let res = manager.apply_profile(target_enum);
+                        manager.set_password(String::new());
+                        let _ = tx_clone.send(res);
+                    } else {
+                        let _ = tx_clone.send(Err("Failed to acquire thread lock architecture".to_string()));
+                    }
+                });
+
                 glib::ControlFlow::Continue
             }
             3 => {
-                if let Ok(mut manager) = BackendManager::global().lock() {
-                    if let Err(_e) = manager.apply_profile(target_enum) {
-                        dialog.close();
-                        let parent_win = root_win_weak.as_ref().and_then(|w| w.upgrade());
-                        manager.set_password(String::new());
-                        open_error_dialog(parent_win.as_ref(), "Privilege Error", "Incorrect root password or sudo access denied. Check terminal logs.");
-                        return glib::ControlFlow::Break;
-                    }
-                    manager.set_password(String::new());
-                }
-                
-                let profile_str = match target_enum {
-                    Profile::Custom => "Custom",
-                    Profile::Performance => "Performance",
-                    Profile::UltraSave => "UltraSave",
-                    Profile::Save => "Save",
-                    Profile::Balanced => "Balanced",
-                };
-                save_profile_to_disk(profile_str);
+                let channel_rx = rx_ref.borrow_mut().take();
+                if let Some(rx_channel) = channel_rx {
+                    match rx_channel.recv_timeout(Duration::from_secs(10)) {
+                        Ok(Ok(())) => {
+                            let profile_str = match target_enum {
+                                Profile::Custom => "Custom",
+                                Profile::Performance => "Performance",
+                                Profile::UltraSave => "UltraSave",
+                                Profile::Save => "Save",
+                                Profile::Balanced => "Balanced",
+                            };
+                            save_profile_to_disk(profile_str);
 
-                status_lbl.set_label("Optimization Completed");
-                sub_status_lbl.set_label("Core parameters successfully deployed.");
-                progress_bar.set_fraction(1.0);
-                mark_button_active(&target_btn);
+                            status_lbl.set_label("Optimization Completed");
+                            sub_status_lbl.set_label("Core parameters successfully deployed.");
+                            progress_bar.set_fraction(1.0);
+                            mark_button_active(&target_btn);
+                        }
+                        _ => {
+                            dialog.close();
+                            let parent_win = root_win_weak.as_ref().and_then(|w| w.upgrade());
+                            open_error_dialog(parent_win.as_ref(), "Privilege Error", "Incorrect root password or sudo access denied. Check terminal logs.");
+                            return glib::ControlFlow::Break;
+                        }
+                    }
+                }
                 glib::ControlFlow::Continue
             }
             _ => {

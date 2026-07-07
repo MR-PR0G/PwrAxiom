@@ -18,7 +18,6 @@ pub const GITHUB_URL: &str = "https://github.com/MR-PR0G/PwrAxiom";
 pub const PROJECT_WEBSITE: &str = "https://github.com/MR-PR0G/PwrAxiom";
 
 const GAP_SMALL: i32 = 8;
-const GAP_MEDIUM: i32 = 16;
 const GAP_LARGE: i32 = 24;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
