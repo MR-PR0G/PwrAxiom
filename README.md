@@ -1,15 +1,15 @@
 # ⚡ Power Axiom
 
-![Version](https://img.shields.io/badge/Version-0.1.1-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.2.0-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey.svg)
 ![GTK](https://img.shields.io/badge/GUI-GTK4-green.svg)
-![C](https://img.shields.io/badge/Language-C-blue.svg)
+![Rust](https://img.shields.io/badge/Language-Rust-orange.svg)
 
-**Power Axiom** is an advanced, system-level power and performance management utility for Linux. Written in C and powered by GTK4, it grants users absolute control over their CPU, GPU, and PCIe states through a sleek, hardware-accelerated interface.
+**Power Axiom** is an advanced, system-level hardware performance and power management utility for Linux. Completely rewritten in **Rust** and powered by a fluid, glassmorphism-inspired **GTK4** interface, it grants users absolute control over their CPU, GPU, and PCIe states.
 
-Whether you need to squeeze every drop of battery life out of your laptop or unleash maximum overclocked performance for gaming and heavy workloads, Power Axiom configures your Linux kernel parameters safely and instantly.
+Whether you need to squeeze every drop of battery life out of your laptop or unleash maximum performance for heavy developer workloads and gaming, Power Axiom configures your Linux kernel parameters safely, instantly, and efficiently.
+
 ---
-
 
 <p align="center">
   <table border="0" style="border-collapse: collapse; border-style: none;" align="center">
@@ -18,7 +18,7 @@ Whether you need to squeeze every drop of battery life out of your laptop or unl
         <img src="/Demos/1.png" alt="Power Axiom Dashboard" style="width: 100%; max-width: 100%; border-radius: 8px;">
       </td>
       <td align="center" width="50%" style="border: none; padding: 5px;">
-        <img src="/Demos/2.png" alt="Ultra Performance Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
+        <img src="/Demos/2.png" alt="Performance Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
       </td>
     </tr>
     <tr>
@@ -26,86 +26,113 @@ Whether you need to squeeze every drop of battery life out of your laptop or unl
         <img src="/Demos/3.png" alt="Dynamic Theming" style="width: 100%; max-width: 100%; border-radius: 8px;">
       </td>
       <td align="center" width="50%" style="border: none; padding: 5px;">
-        <img src="/Demos/4.png" alt="Ultra Save Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
+        <img src="/Demos/4.png" alt="Save Mode" style="width: 100%; max-width: 100%; border-radius: 8px;">
       </td>
     </tr>
   </table>
 </p>
 
 ---
+
 ## ✨ Key Features
 
-* 🎛️ **5 Hardware Profiles:** Instantly switch between Ultra Performance, Performance, Balanced, Save, and Ultra Save.
-* 📊 **Real-time Monitoring:** Built-in dashboard tracking per-core CPU frequencies, GPU status (Active/Disabled/Clock speeds), and Live Package/Battery Wattage.
-* 🧠 **Deep Kernel Integration:** Controls CPU Governors, Turbo Boost, Intel P-States, AMD P-States, and PCIe ASPM (Active State Power Management).
-* 🎮 **GPU Management:** Forces dGPU into `D3Cold` (Deep Sleep) for extreme battery savings, or maxes out clocks for heavy rendering.
-* 🎨 **Dynamic Theming:** 10 built-in color schemes with glowing, modern GTK4 CSS styling.
-* 🛡️ **Secure Execution:** Utilizes `pkexec` (Polkit) for secure, sandboxed root-level hardware modifications with live progress tracking.
-* 🐧 **Cross-Distro Support:** Automated dependency resolution for Arch Linux, Ubuntu/Debian, and Fedora.
+* 🎛️ **Hardware Profiles:** Seamlessly switch between high-performance execution, adaptive balance, and aggressive power-saving structures.
+* 📊 **Real-time Monitoring:** Internal **gatherer** engine tracking per-core CPU frequencies, live Package wattage, and multi-vendor GPU metrics (NVIDIA/AMD/Intel) through safe static `nvtop` linkers.
+* 🧠 **Deep Kernel Integration:** Direct communication with Linux power governors, Turbo Boost toggles, and sysfs kernel power parameters.
+* 🎮 **GPU Power States:** Auto-manages discrete GPU runtime states or forces power-down hooks for extreme hardware power preservation.
+* 🎨 **Liquid Glass Aesthetics:** Smooth CSS interaction overlays, dynamic responsive spotlight border animations with boundary clamps, and modern dark-mode layouts.
+* 🛡️ **Polkit Secure Execution:** Safe, sandboxed system-level modifications with live desktop signal integration via D-Bus (`dbus-crossroads`).
+* 🐧 **Cross-Distro Installer:** Automated environment detection and safe binary caching across popular distributions.
 
 ---
 
-## 🚀 Power Modes Explained
+## 🚀 Power Profiles & Customization
 
-| Mode | Description |
+| Profile | Description |
 | :--- | :--- |
-| 🔥 **Ultra Performance** | Overclocks & locks minimum frequencies (>1.5GHz), maxes out GPU performance states, and enforces maximum PCIe power. |
-| ⚡ **Performance** | Applies `performance` governor, enables Turbo Boost, and allows maximum CPU/GPU frequency scaling. |
-| ⚖️ **Balanced** | Restores the default `schedutil` governor, auto-manages GPU, and returns hardware to factory default power management. |
-| 🔋 **Save** | Standard battery saving. Applies `powersave` governor, disables Turbo Boost, and puts PCIe into powersave mode. |
-| 🛑 **Ultra Save** | Extreme battery preservation. Hard-caps CPU cores (Cores 0,1 to 1.5GHz; others to 800MHz), disables dGPU entirely (turns off via vgaswitcheroo), and enforces minimum Link Power. |
+| ⚡ **Performance** | Applies the kernel `performance` governor, activates Turbo Boost / P-States scaling limits, and allows maximum hardware frequency response. |
+| ⚖️ **Balanced** | Restores the default `schedutil` governor, allowing smooth frequency scaling based on immediate CPU/GPU rendering demands. |
+| 🔋 **Save** | Standard power saving. Applies the `powersave` governor, deactivates Turbo Boost, and optimizes internal links to extend battery runtime. |
+| 🛠️ **Custom Setup** | **[COMING SOON]** Take ultimate control. Design your own hardware profiles by locking down specific clock ranges, undervolting thresholds, custom governor bindings, and dedicated fan curves per application. |
 
 ---
 
-## 🛠️ Installation
-
-Power Axiom comes with a smart installer that automatically detects your Linux distribution, installs the required dependencies, and sets up the desktop entry.
-
-### 1. Clone the repository
+## 🛠️ Installation 
+1. Go to the [Releases](https://github.com/MR-PR0G/pwraxiom/releases) page and download the latest `power_axiom-v0.2.0-x86_64.tar.gz`.
+2. Extract the archive and run the installer:
 ```bash
-git clone [https://github.com/MR-PR0G/pwraxiom.git](https://github.com/MR-PR0G/pwraxiom.git)
-cd pwraxiom‍
+tar -xvf power_axiom-v0.2.0-x86_64.tar.gz
+cd power_axiom-v0.2.0
+chmod +x installer.sh
+sudo ./installer.sh
 ```
-2. Run the Installer
-
-Execute the installation script with root privileges:
-```bash
-sudo ./install.sh
-```
-The installer will:
-  -  Detect your OS (Arch, Debian/Ubuntu, Fedora).
-
-  - Prompt you to install missing dependencies (gtk4, pciutils, cpupower/linux-tools).
-
-  - Copy the executable to /usr/local/bin/pwraxiom.
-
-  - Install the application icon and create a Desktop entry.
-
-💻 Usage
-
-You can launch the application directly from your desktop environment's app menu (search for Power Axiom), or start it via terminal:
+The installer will automatically:
+- Detect your Linux distribution (Arch Linux, Debian/Ubuntu, Fedora/RHEL).
+- Install missing runtime dependencies (gtk4, glib2, libdrm, pciutils, cpupower).
+- Provide an interactive prompt to pull hardware-specific components (e.g., proprietary NVIDIA compute modules).
+- Verify and link the tracked standalone production binary directly to your global environment at /usr/local/bin/pwraxiom.
+- Register the custom application vector arts (pwraxiomicon.png) and deploy the official system-wide .desktop workspace shortcut.
+## 💻 Usage
+Once installed globally, you can launch the application directly from your desktop environment's application menu (search for Power Axiom), or invoke it via your terminal interface:
 ```
 pwraxiom
 ```
-Note: Administrative privileges (via a Polkit popup) will only be requested when you apply a power mode.
-📂 Project Structure
-```Plaintext
+⚠️ Note: Administrative privileges via a Polkit popup window will only be requested dynamically by the system daemon when you actively switch or apply a new hardware power profile.
+## 📂 Project Structure 
+```
 pwraxiom/
-├── pwraxiom            # Compiled Executable
-├── pwraxiomicon.png    # Application Icon
-├── install.sh          # Smart Installer Script
+├── Cargo.toml          # Workspace root profile configuration
+├── installer.sh        # Smart automatic cross-distro setup tool
+├── pwraxiomicon.png    # High-resolution glassmorphism desktop icon
 ├── README.md           # Documentation
-└── src/                # C Source Code
-    ├── main.c          # GUI & App Logic
-    ├── monitor.c       # Hardware Monitoring Engine
-    ├── monitor.h       # Monitor Header
-    ├── power_core.c    # Script Generation & Kernel Configs
-    └── power_core.h    # Core Header
+├── target/
+│   └── release/
+│       └── power_axiom # Tracked standalone production binary
+├── src/                # Front-end user interface application
+│   ├── main.rs         # GTK4 layout composition
+│   └── ui/             # Dynamic style management, state listeners & spotlight bindings
+└── gatherer/           # Dedicated system resource harvesting crate
+    ├── Cargo.toml      # Library level requirements
+    ├── build/          # Embedded native components (statically linked nvtop engine)
+    └── src/            # Linux kernel abstractions and metrics parsers
 ```
-📝 Compiling from Source
+## ⚙️ Hacking & Compiling From Source
+## ⚙️ Hacking & Compiling From Source
 
-If you wish to modify the code and compile it yourself, ensure you have the gcc and gtk4 development packages installed, then run:
+**For developers, power-users, or package maintainers who prefer local optimizations, strict architecture tailoring, or system auditing, Power Axiom provides a pure Rust workspace. You can rebuild the entire binary target natively in a single stage.**
+
+### 1. Developer Dependencies
+Before building from source, you must install the required native development libraries, C compilers, and graphic subsystem bindings on your host device:
+
+| Distribution | Command to Install Build Dependencies |
+| :--- | :--- |
+| **Arch Linux** | `sudo pacman -S --needed base-devel rust cargo gtk4 glib2 libdrm pciutils cpupower` |
+| **Debian / Ubuntu** | `sudo apt install -y build-essential rustc cargo libgtk-4-dev libglib2.0-dev libdrm-dev pciutils linux-cpupower` |
+| **Fedora / RHEL** | `sudo dnf groupinstall -y "Development Tools" && sudo dnf install -y rust cargo gtk4-devel glib2-devel libdrm-devel pciutils kernel-tools` |
+
+### 2. Native Monolithic Compilation
+**Execute the commands below to purge any existing local build caches and force a high-optimization release profile utilizing Fat LTO (Link-Time Optimization) and single codegen units for maximum code stripping, hardware-specific acceleration, and execution speed:**
+
+```bash
+# Flush target work-trees and artifact caches
+cargo clean
+
+# Boost allocation limits to prevent compiler stack overflow during deep LLVM optimization passes
+export RUST_MIN_STACK=134217728
+
+# Compile optimized standalone production binary with statically linked low-level C layers
+cargo build --release --all-features
 ```
-cd src
-gcc main.c monitor.c power_core.c -o ../pwraxiom $(pkg-config --cflags --libs gtk4) -lm
+### 💡 Pro-Tip (Target Architecture Tailoring):
+To generate an executable highly optimized for your machine's exact CPU architecture (enabling special instruction sets like AVX-512, FMA, etc.), pass the host target flag to the Rust compiler before building:
+```
+RUSTFLAGS="-C target-cpu=native" cargo build --release --all-features
+```
+### 3. Immediate Binary Verification & Testing
+Once completed, the independent native executable will be generated at `target/release/power_axiom`. You can bypass global deployment and test your modifications instantly or manually run the installer to lock down your new build:
+```
+# Execute local target directly with isolated environment testing
+./target/release/power_axiom
+# Or register your custom local build into system-wide binaries via the tracking script
+sudo ./installer.sh
 ```
