@@ -81,20 +81,21 @@ pwraxiom
 ## 📂 Project Structure 
 ```
 pwraxiom/
-├── Cargo.toml          # Workspace root profile configuration
+├── Cargo.toml          # Workspace root configuration
+├── Cargo.lock          # Dependency lockfile
 ├── installer.sh        # Smart automatic cross-distro setup tool
-├── pwraxiomicon.png    # High-resolution glassmorphism desktop icon
+├── pwraxiomicon.png    # High-resolution glassmorphism icon
 ├── README.md           # Documentation
-├── target/
-│   └── release/
-│       └── power_axiom # Tracked standalone production binary
-├── src/                # Front-end user interface application
-│   ├── main.rs         # GTK4 layout composition
-│   └── ui/             # Dynamic style management, state listeners & spotlight bindings
-└── gatherer/           # Dedicated system resource harvesting crate
-    ├── Cargo.toml      # Library level requirements
-    ├── build/          # Embedded native components (statically linked nvtop engine)
-    └── src/            # Linux kernel abstractions and metrics parsers
+├── Demos/              # Visual screenshots & previews for README
+├── src/                # Front-end UI & Application Logic
+│   ├── main.rs         # GTK4 window composition & entry point
+│   ├── backend/        # UI-to-daemon bridge & Polkit IPC handlers
+│   └── ui/             # Glassmorphism CSS, spotlight animations & state listeners
+└── gatherer/           # Core Hardware Engine (Backend Crate)
+    ├── Cargo.toml      # Subsystem library definition
+    ├── build/          # Native C compilation hooks (nvtop integration)
+    ├── 3rdparty/       # External native bindings & submodules
+    └── src/            # Kernel sysfs abstractions, CPU/GPU metric parsers
 ```
 ## ⚙️ Hacking & Compiling From Source
 ## ⚙️ Hacking & Compiling From Source
