@@ -136,3 +136,11 @@ Once completed, the independent native executable will be generated at `target/r
 # Or register your custom local build into system-wide binaries via the tracking script
 sudo ./installer.sh
 ```
+
+## 📜 Acknowledgments
+
+
+This project stands on the shoulders of giants. Special thanks to the open-source community and the following upstream project:
+
+
+* **[Mission Center](https://github.com/mishaaq/mission-center):** The core hardware metrics parsing logic in our `gatherer` subsystem is adapted from Mission Center's process and usage gathering tools under the GPL license. 
