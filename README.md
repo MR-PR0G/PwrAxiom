@@ -98,7 +98,6 @@ pwraxiom/
     └── src/            # Kernel sysfs abstractions, CPU/GPU metric parsers
 ```
 ## ⚙️ Hacking & Compiling From Source
-## ⚙️ Hacking & Compiling From Source
 
 **For developers, power-users, or package maintainers who prefer local optimizations, strict architecture tailoring, or system auditing, Power Axiom provides a pure Rust workspace. You can rebuild the entire binary target natively in a single stage.**
 
