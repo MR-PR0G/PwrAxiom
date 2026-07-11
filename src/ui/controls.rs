@@ -86,7 +86,6 @@ fn mark_button_active(btn: &Button) {
     ACTIVE_BUTTON.with(|cell| {
         if let Some(old_btn) = cell.borrow_mut().take() {
             old_btn.remove_css_class("active-planet");
-            // فوراً دکمه قبلی را وادار به بازنویسی استایل میکنیم تا زباله پیکسلی رخ ندهد
             old_btn.queue_allocate();
         }
         btn.add_css_class("active-planet");

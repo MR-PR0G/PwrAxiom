@@ -1,9 +1,8 @@
 use glib::clone;
 use gtk4::prelude::*;
 use gtk4::{
-    gdk, Align, Box as GtkBox, Button, CenterBox, FlowBox, Label, Orientation, PolicyType,
-    ProgressBar, Revealer, RevealerTransitionType, ScrolledWindow, SelectionMode, ToggleButton,
-    Window,
+    Align, Box as GtkBox, Button, CenterBox, FlowBox, Label, Orientation, PolicyType, ProgressBar,
+    Revealer, RevealerTransitionType, ScrolledWindow, SelectionMode, ToggleButton, Window,
 };
 use std::cell::RefCell;
 use std::path::PathBuf;
@@ -238,9 +237,11 @@ pub fn init_and_start_hardware_polling() -> mpsc::Receiver<SystemSnapshot> {
         let mut hw_sup = HardwareSupplement::new();
         let mut gpu = GpuInfo::new();
 
-        cpu.refresh_static_info_cache();
-        gpu.refresh_gpu_list();
-        gpu.refresh_static_info_cache();
+        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            cpu.refresh_static_info_cache();
+            gpu.refresh_gpu_list();
+            gpu.refresh_static_info_cache();
+        }));
 
         let mut last_profile_state = Profile::Balanced;
 
@@ -254,16 +255,22 @@ pub fn init_and_start_hardware_polling() -> mpsc::Receiver<SystemSnapshot> {
             if current_active_profile != last_profile_state {
                 last_profile_state = current_active_profile;
                 thread::sleep(Duration::from_millis(1500));
-                processes = Processes::new();
-                cpu = CpuInfo::new();
-                cpu.refresh_static_info_cache();
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    processes = Processes::new();
+                    cpu = CpuInfo::new();
+                    cpu.refresh_static_info_cache();
+                }));
                 continue;
             }
 
             let pool_result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                 processes.refresh_cache();
                 cpu.refresh_dynamic_info_cache(&processes);
-                gpu.refresh_dynamic_info_cache(&mut processes);
+
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    gpu.refresh_dynamic_info_cache(&mut processes);
+                }));
+
                 fans.refresh_cache();
 
                 let mut snap = SystemSnapshot::default();
@@ -394,9 +401,11 @@ pub fn init_and_start_hardware_polling() -> mpsc::Receiver<SystemSnapshot> {
                     }
                 }
                 Err(_) => {
-                    processes = Processes::new();
-                    cpu = CpuInfo::new();
-                    cpu.refresh_static_info_cache();
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                        processes = Processes::new();
+                        cpu = CpuInfo::new();
+                        cpu.refresh_static_info_cache();
+                    }));
                 }
             }
 
@@ -425,44 +434,40 @@ fn load_theme_from_disk() -> String {
         .unwrap_or_else(|_| "#00e5ff".to_string())
 }
 
-fn apply_theme(base_color: &str) {
-    if let Some(display) = gdk::Display::default() {
-        let provider = gtk4::CssProvider::new();
-
-        let r_str = if base_color.len() >= 7 {
-            &base_color[1..3]
-        } else {
-            "00"
-        };
-        let g_str = if base_color.len() >= 7 {
-            &base_color[3..5]
-        } else {
-            "229"
-        };
-        let b_str = if base_color.len() >= 7 {
-            &base_color[5..7]
-        } else {
-            "255"
-        };
-
-        let css = format!(
-            ":root {{
-                --primary-color: {0};
-                --secondary-color: rgba({1}, {2}, {3}, 0.25);
-            }}",
-            base_color,
-            u8::from_str_radix(r_str, 16).unwrap_or(0),
-            u8::from_str_radix(g_str, 16).unwrap_or(229),
-            u8::from_str_radix(b_str, 16).unwrap_or(255)
-        );
-        provider.load_from_data(&css);
-        gtk4::style_context_add_provider_for_display(
-            &display,
-            &provider,
-            gtk4::STYLE_PROVIDER_PRIORITY_APPLICATION,
-        );
-        save_theme_to_disk(base_color);
+fn hex_to_class_name(color: &str) -> &'static str {
+    match color.to_lowercase().as_str() {
+        "#3b82f6" => "theme-blue",
+        "#10b981" => "theme-green",
+        "#f59e0b" => "theme-orange",
+        "#8b5cf6" => "theme-purple",
+        "#ef4444" => "theme-red",
+        "#ec4899" => "theme-pink",
+        _ => "theme-cyan",
     }
+}
+
+fn apply_theme(base_color: &str) {
+    let target_class = hex_to_class_name(base_color);
+
+    for window in gtk4::Window::list_toplevels() {
+        let class_list = vec![
+            "theme-cyan",
+            "theme-blue",
+            "theme-green",
+            "theme-orange",
+            "theme-purple",
+            "theme-red",
+            "theme-pink",
+        ];
+
+        for cls in class_list {
+            window.remove_css_class(cls);
+        }
+
+        window.add_css_class(target_class);
+    }
+
+    save_theme_to_disk(base_color);
 }
 
 pub fn load_saved_theme() {
@@ -1072,7 +1077,6 @@ pub fn create(receiver: mpsc::Receiver<SystemSnapshot>) -> GtkBox {
         .margin_bottom(15)
         .build();
 
-    // FIX: فراخوانی اشاره‌گر هوشمند std::boxed::Box به جای GtkBox مخدوش شده
     let apply_theme_hook: std::boxed::Box<dyn Fn(&str)> =
         std::boxed::Box::new(move |color: &str| {
             apply_theme(color);

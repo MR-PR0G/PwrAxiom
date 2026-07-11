@@ -1,12 +1,44 @@
-:root {
-    --primary-color: #00e5ff;
-    --secondary-color: rgba(0, 229, 255, 0.25);
-}
-
 window {
     background-color: #0a0a0a;
 }
 
+/* ================= THEME DEFINITIONS ================= */
+.theme-cyan {
+    --primary-color: #00e5ff;
+    --secondary-color: rgba(0, 229, 255, 0.25);
+}
+
+.theme-blue {
+    --primary-color: #3b82f6;
+    --secondary-color: rgba(59, 130, 246, 0.25);
+}
+
+.theme-green {
+    --primary-color: #10b981;
+    --secondary-color: rgba(16, 185, 129, 0.25);
+}
+
+.theme-orange {
+    --primary-color: #f59e0b;
+    --secondary-color: rgba(245, 158, 11, 0.25);
+}
+
+.theme-purple {
+    --primary-color: #8b5cf6;
+    --secondary-color: rgba(139, 92, 246, 0.25);
+}
+
+.theme-red {
+    --primary-color: #ef4444;
+    --secondary-color: rgba(239, 68, 68, 0.25);
+}
+
+.theme-pink {
+    --primary-color: #ec4899;
+    --secondary-color: rgba(236, 72, 153, 0.25);
+}
+
+/* ================= UI COMPONENTS ================= */
 .glass-monitor {
     background: linear-gradient(135deg, rgba(25,25,25,0.85) 0%, rgba(15,15,15,0.95) 100%);
     border: 1px solid rgba(255,255,255,0.08);
@@ -41,7 +73,7 @@ window {
 
 .dash-title {
     font-size: 11px;
-    color: #777;
+    color: #777777;
     font-weight: bold;
     letter-spacing: 1px;
     margin-bottom: 6px;
@@ -50,7 +82,7 @@ window {
 .dash-value-small {
     font-size: 16px;
     font-weight: bold;
-    color: #fff;
+    color: #ffffff;
     text-shadow: 0 0 10px rgba(255,255,255,0.1);
 }
 
@@ -64,8 +96,8 @@ window {
 
 .core-offline {
     opacity: 0.20;
-    background-color: rgba(10, 10, 10, 0.6) !important;
-    border-color: rgba(255, 255, 255, 0.03) !important;
+    background-color: rgba(10, 10, 10, 0.6);
+    border-color: rgba(255, 255, 255, 0.03);
 }
 
 .mini-core-lbl {
@@ -77,7 +109,7 @@ window {
 
 .mini-core-val {
     font-size: 12px;
-    color: #fff;
+    color: #ffffff;
     font-weight: bold;
     margin-right: 6px;
 }
@@ -116,13 +148,13 @@ window {
 
 .gpu-stat-lbl {
     font-size: 10px;
-    color: #666;
+    color: #666666;
     font-weight: bold;
 }
 
 .gpu-stat-val {
     font-size: 11px;
-    color: #fff;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -150,7 +182,7 @@ window {
 .gpu-bar-text {
     font-size: 14px;
     font-weight: bold;
-    color: #fff;
+    color: #ffffff;
     text-shadow: 0 2px 6px rgba(0,0,0,0.9);
 }
 
@@ -170,7 +202,7 @@ window {
     border-width: 1px;
     border-color: var(--secondary-color);
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    color: white;
+    color: #ffffff;
     font-weight: bold;
     font-size: 16px;
     border-radius: 32px;
@@ -184,7 +216,6 @@ window {
     border-radius: 12px 32px 32px 32px;
 }
 
-/* فیکس قطعی دو رنگ شدن دکمه فعال: سایه‌ها کاملاً پیرو پالت رنگ انتخابی کاربر هستند */
 .active-planet {
     border-width: 3px;
     border-color: var(--primary-color);
@@ -213,7 +244,7 @@ window {
 }
 
 .theme-circle:hover {
-    border: 2px solid #fff;
+    border: 2px solid #ffffff;
     box-shadow: 0 0 10px var(--primary-color);
 }
 
@@ -240,7 +271,7 @@ window {
 
 .boost-btn-style {
     background-color: var(--primary-color);
-    color: #000;
+    color: #000000;
     font-weight: bold;
     border-radius: 8px;
     box-shadow: 0 4px 12px var(--secondary-color);
@@ -248,7 +279,7 @@ window {
 }
 
 .boost-btn-style:hover {
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 6px 18px var(--primary-color);
 }
 
