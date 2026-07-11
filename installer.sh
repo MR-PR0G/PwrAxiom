@@ -36,9 +36,9 @@ else
 fi
 
 install_deps() {
-    local pkgs_arch=("gtk4" "glib2" "libdrm" "egl-wayland" "mesa" "cairo" "pango" "graphene" "dbus" "pciutils" "cpupower")
-    local pkgs_debian=("libgtk-4-dev" "libglib2.0-dev" "libdrm-dev" "libvulkan1" "libegl-wayland1" "pciutils" "linux-cpupower")
-    local pkgs_fedora=("gtk4-devel" "glib2-devel" "libdrm-devel" "vulkan-loader" "pciutils" "kernel-tools")
+    local pkgs_arch=("gtk4" "glib2" "libdrm" "egl-wayland" "mesa" "cairo" "pango" "graphene" "dbus" "pciutils" "cpupower" "polkit")
+    local pkgs_debian=("libgtk-4-dev" "libglib2.0-dev" "libdrm-dev" "libvulkan1" "libegl-wayland1" "pciutils" "linux-cpupower" "policykit-1")
+    local pkgs_fedora=("gtk4-devel" "glib2-devel" "libdrm-devel" "vulkan-loader" "pciutils" "kernel-tools" "polkit")
 
     case "$OS_ID" in
         arch|manjaro|endeavouros)
@@ -88,7 +88,27 @@ else
 fi
 
 echo -e "${BLUE}Copying executable to /usr/local/bin...${NC}"
-cp "$BINARY_SRC" /usr/local/bin/pwraxiom
+cp "$BINARY_SRC" /usr/local/bin/pwraxiom-core
+chmod +x /usr/local/bin/pwraxiom-core
+
+echo -e "${BLUE}Creating graphical privilege wrapper...${NC}"
+cat << 'EOF' > /usr/local/bin/pwraxiom
+#!/usr/bin/env bash
+
+APP_EXEC="/usr/local/bin/pwraxiom-core"
+
+if command -v pkexec &> /dev/null; then
+    pkexec env DISPLAY="$DISPLAY" WAYLAND_DISPLAY="$WAYLAND_DISPLAY" XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" "$APP_EXEC"
+else
+    if command -v xhost &> /dev/null; then
+        xhost +si:localuser:root > /dev/null 2>&1
+        sudo -E dbus-run-session "$APP_EXEC"
+    else
+        sudo "$APP_EXEC"
+    fi
+fi
+EOF
+
 chmod +x /usr/local/bin/pwraxiom
 
 ICON_SRC="./pwraxiomicon.png"
@@ -118,9 +138,13 @@ EOF
 
 chmod +x "$DESKTOP_ENTRY"
 
+if command -v update-desktop-database &> /dev/null; then
+    update-desktop-database /usr/share/applications
+fi
+
 echo -e ""
 echo -e "${GREEN}${BOLD}=========================================${NC}"
-echo -e "${GREEN}${BOLD}   Power Axiom Installed Successfully!  ${NC}"
+echo -e "${GREEN}${BOLD}   Power Axiom Installed Successfully!   ${NC}"
 echo -e "${GREEN}${BOLD}=========================================${NC}"
 echo -e "${YELLOW}You can now run the app via terminal using: ${BOLD}pwraxiom${NC}"
-echo -e "${YELLOW}Or find it in your desktop applications menu.${NC}"گ
+echo -e "${YELLOW}Or find it in your desktop applications menu.${NC}"
