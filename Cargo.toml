@@ -5,6 +5,7 @@ edition = "2021"
 
 [workspace]
 members = ["gatherer"]
+resolver = "2"
 
 [dependencies]
 gio = { version = "0.18", features = ["v2_64"] }
@@ -15,3 +16,44 @@ nvml-wrapper = "0.10"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 gatherer = { path = "gatherer" }
+
+[profile.dev]
+opt-level = 0
+debug = 1
+codegen-units = 16
+
+[profile.dev.package."*"]
+opt-level = 0
+debug = false
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[package.metadata.appimage]
+name = "PowerAxiom"
+icon = "pwraxiomicon.png"
+assets = ["pwraxiomicon.png"]
+exec = "power_axiom"
+script = """
+#!/usr/bin/env bash
+
+HERE="$(dirname "$(readlink -f "${0}")")"
+APP_EXEC="${HERE}/usr/bin/power_axiom"
+
+if [ "$EUID" -ne 0 ]; then
+    if command -v pkexec &> /dev/null; then
+        exec pkexec env DISPLAY="$DISPLAY" WAYLAND_DISPLAY="$WAYLAND_DISPLAY" XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" "$APP_EXEC" "$@"
+    elif command -v xhost &> /dev/null; then
+        xhost +si:localuser:root > /dev/null 2>&1
+        exec sudo -E dbus-run-session "$APP_EXEC" "$@"
+    else
+        exec sudo "$APP_EXEC" "$@"
+    fi
+else
+    exec "$APP_EXEC" "$@"
+fi
+"""
