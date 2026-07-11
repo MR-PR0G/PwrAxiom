@@ -36,19 +36,6 @@ Whether you need to squeeze every drop of battery life out of your laptop or unl
 
 ---
 
-⚠️ Important Notice – Temporary Download Suspension
-
-A critical bug has been identified in the current version of the project. Unfortunately, it does not work correctly for all users.
-
-Please do not download this version at this time.
-
-We kindly ask you to hold off and wait for the stable update, which will be released soon.
-
-We appreciate your patience and understanding. The fix is in progress and will be published as soon as it's ready.
-
-Stay tuned for the updated stable release.
-
----
 
 ## ✨ Key Features
 
